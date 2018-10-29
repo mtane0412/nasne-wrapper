@@ -4,7 +4,16 @@ const cronJob = require('cron').CronJob;
 const moment = require('moment');
 
 const nasneOptions = {
-	url: "http://" + process.env.NASNE_ADDRESS + ":64220/recorded/titleListGet?searchCriteria=0&filter=0&startingIndex=0&requestedCount=0&sortCriteria=0&withDescriptionLong=0&withUserData=0",
+	url: `http://${process.env.NASNE_IP}:64220/recorded/titleListGet`,
+	qs: {
+		searchCriteria: '0',
+		filter: '0',
+		startingIndex: '0',
+		requestedCount: '0',
+		sortCriteria: '0',
+		withDescriptionLong: '0',
+		withUserData: '0'
+	},
 	method: "GET",
 	json: true
 }
