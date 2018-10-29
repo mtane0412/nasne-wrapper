@@ -1,0 +1,17 @@
+{
+  "name": "nasne-checker",
+  "version": "1.0.0",
+  "description": "Check the local Nasne and send a POST request.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mtane0412",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^1.4.1",
+    "dotenv": "^6.1.0",
+    "moment": "^2.22.2",
+    "request-promise": "^4.2.2"
+  }
+}
