@@ -3,10 +3,8 @@ const request = require('request-promise');
 const cronJob = require('cron').CronJob;
 const moment = require('moment');
 
-const nasneUrl = 'http://" + process.env.NASNE_ADDRESS + ":64220/recorded/titleListGet?searchCriteria=0&filter=0&startingIndex=0&requestedCount=0&sortCriteria=0&withDescriptionLong=0&withUserData=0';
-
 const nasneOptions = {
-	url: nasneUrl,
+	url: 'http://" + process.env.NASNE_ADDRESS + ":64220/recorded/titleListGet?searchCriteria=0&filter=0&startingIndex=0&requestedCount=0&sortCriteria=0&withDescriptionLong=0&withUserData=0',
 	method: 'GET',
 	json: true
 }
@@ -30,7 +28,7 @@ function nasnePost(nasneOptions) {
 			if (moment().diff(moment(key.startDateTime), 'hours') < 2) newVideo = true;
 			let program = {
 				id: key.id,
-				title: key.title
+				title: key.title // 特殊文字を置き換え
 					.replace(/\ue195/g, '[終]')
 					.replace(/\ue193/g, '[新]')
 					.replace(/\ue0fe/g, '[字]')
@@ -53,9 +51,9 @@ function nasnePost(nasneOptions) {
 				body: JSON.stringify(result)
 			};
 			request(options, function (error, response, body) { });
-			console.log('Update has been sent.', new Date());
+			console.log(`${new Date()} Update has been sent.`);
 		} else {
-			console.log('No Update', new Date());
+			console.log(`${new Date()} No Update`);
 		}
 	}).catch(function (err) {
 		console.log(err);
