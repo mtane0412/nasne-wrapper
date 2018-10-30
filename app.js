@@ -32,41 +32,44 @@ function nasnePost(nasneOptions) {
 	 * 新着録画がある場合はGASにpost
 	 */
 
-	request(nasneOptions).then(function (body) {
-		body.item.forEach(function (key) {
-			if (moment().diff(moment(key.startDateTime), 'hours') < 2) newVideo = true;
-			let program = {
-				id: key.id,
-				title: key.title // 特殊文字を置き換え
-					.replace(/\ue195/g, "[終]")
-					.replace(/\ue193/g, "[新]")
-					.replace(/\ue0fe/g, "[字]")
-					.replace(/\uE184/g, "[解]")
-					.replace(/\uE183/g, "[多]")
-					.replace(/\uE180/g, "[デ]"),
-				description: key.description,
-				startDateTime: key.startDateTime,
-				duration: key.duration
-			};
-			result.item.push(program);
+	request(nasneOptions)
+		.then(function (body) {
+			body.item.forEach(function (key) {
+				if (moment().diff(moment(key.startDateTime), 'hours') < 2) newVideo = true;
+				let program = {
+					id: key.id,
+					title: key.title // 特殊文字を置き換え
+						.replace(/\ue195/g, "[終]")
+						.replace(/\ue193/g, "[新]")
+						.replace(/\ue0fe/g, "[字]")
+						.replace(/\uE184/g, "[解]")
+						.replace(/\uE183/g, "[多]")
+						.replace(/\uE180/g, "[デ]"),
+					description: key.description,
+					startDateTime: key.startDateTime,
+					duration: key.duration
+				};
+				result.item.push(program);
+			});
+			if (newVideo) {
+				const options = {
+					uri: process.env.GAS_URL,
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(result)
+				};
+				request(options, function (error, response, body) {
+					if (error) { console.log(error) };
+					console.log(`${new Date()} Update has been sent.`);
+				});
+			} else {
+				console.log(`${new Date()} No Update`);
+			}
+		}).catch(function (err) {
+			console.log(err);
 		});
-		if (newVideo) {
-			const options = {
-				uri: process.env.GAS_URL,
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(result)
-			};
-			request(options, function (error, response, body) { });
-			console.log(`${new Date()} Update has been sent.`);
-		} else {
-			console.log(`${new Date()} No Update`);
-		}
-	}).catch(function (err) {
-		console.log(err);
-	});
 }
 
 // 毎時10分に番組チェック
