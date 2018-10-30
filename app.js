@@ -1,6 +1,5 @@
 require('dotenv').config({ path: '.env' });
 const request = require('request-promise');
-const cronJob = require('cron').CronJob;
 const moment = require('moment');
 
 const nasneOptions = {
@@ -21,10 +20,9 @@ const nasneOptions = {
 const result = {
 	type: "nasne",
 	token: process.env.TOKEN,
+	newVideo: false,
 	item: []
 };
-
-let newVideo = false; // 新着録画フラグ
 
 function nasnePost(nasneOptions) {
 	/*
@@ -35,7 +33,7 @@ function nasnePost(nasneOptions) {
 	request(nasneOptions)
 		.then(function (body) {
 			body.item.forEach(function (key) {
-				if (moment().diff(moment(key.startDateTime), 'hours') < 2) newVideo = true;
+				if (moment().diff(moment(key.startDateTime), 'hours') < 2) result.newVideo = true;
 				let program = {
 					id: key.id,
 					title: key.title // 特殊文字を置き換え
@@ -51,7 +49,7 @@ function nasnePost(nasneOptions) {
 				};
 				result.item.push(program);
 			});
-			if (newVideo) {
+			if (result.newVideo) {
 				const options = {
 					uri: process.env.GAS_URL,
 					method: "POST",
@@ -73,7 +71,8 @@ function nasnePost(nasneOptions) {
 }
 
 // 毎時10分に番組チェック
-const cronTime = "00 10 * * * *";
+const cronJob = require('cron').CronJob;
+const cronTime = "0 10 * * * *";
 
 const job = new cronJob({
 	cronTime: cronTime,
