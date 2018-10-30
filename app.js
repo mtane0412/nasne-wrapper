@@ -73,7 +73,7 @@ function nasnePost(nasneOptions) {
 }
 
 // 毎時10分に番組チェック
-const cronTime = "10 * * * *";
+const cronTime = "* 10 * * * *";
 
 const job = new cronJob({
 	cronTime: cronTime,
