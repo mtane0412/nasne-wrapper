@@ -78,7 +78,7 @@ const job = new cronJob({
 	cronTime: cronTime,
 	onTick: nasnePost(nasneOptions),
 	start: false,
-	timezone: "Japan/Tokyo"
+	timezone: "Asia/Tokyo"
 })
 
 job.start();
