@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '.env' });
 const request = require('request-promise');
 const cronJob = require('cron').CronJob;
 const moment = require('moment');
