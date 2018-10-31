@@ -17,6 +17,7 @@ module.exports = function (Nasne) {
                 withDescriptionLong: '0',
                 withUserData: '0'
             },
+            timeout: 60000,
             method: "GET",
             json: true
         }

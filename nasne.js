@@ -1,5 +1,6 @@
 'use strict'
 const titleListGet = require('./titleListGet.js');
+const HDDInfoGet = require('./HDDInfoGet.js');
 
 class Nasne {
     constructor (ip) {
@@ -16,5 +17,6 @@ class Nasne {
 }
 
 titleListGet(Nasne);
+HDDInfoGet(Nasne);
 
 module.exports = Nasne;
