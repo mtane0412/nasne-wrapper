@@ -1,6 +1,6 @@
 'use strict'
 
-require('dotenv').config({ PATH: __dirname + '/.env'});
+require('dotenv').config({ PATH: __dirname + '/.env' });
 const request = require('request-promise');
 const moment = require('moment');
 
@@ -22,7 +22,7 @@ module.exports = function (Nasne) {
             json: true
         }
         request(options, function (error, response, body) {
-            if (error) { console.log(error); } 
+            if (error) { console.log(error); }
             const result = {
                 type: "nasne",
                 token: process.env.TOKEN,
