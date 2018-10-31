@@ -1,5 +1,5 @@
 'use strict'
-require('dotenv').config();
+require('dotenv').config({ PATH: __dirname + '/.env'});
 
 module.exports = function postToGAS(result) {
     if (result.newVideo) {
