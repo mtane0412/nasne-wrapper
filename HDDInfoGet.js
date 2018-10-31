@@ -6,15 +6,9 @@ const request = require('request-promise');
 module.exports = function (Nasne) {
     Nasne.prototype.HDDInfoGet = (callback) => {
         const options = {
-            url: `http://${process.env.NASNE_IP}:64210/status/HDDInfoGet?id=0`,
+            url: `http://${process.env.NASNE_IP}:64210/status/HDDInfoGet`,
             qs: {
-                searchCriteria: '0',
-                filter: '0',
-                startingIndex: '0',
-                requestedCount: '0',
-                sortCriteria: '0',
-                withDescriptionLong: '0',
-                withUserData: '0'
+                id: '0'
             },
             timeout: 60000,
             method: "GET",
