@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env' });
+require('dotenv').config();
 const request = require('request-promise');
 const moment = require('moment');
 
