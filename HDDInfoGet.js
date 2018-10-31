@@ -19,9 +19,10 @@ module.exports = function (Nasne) {
             const result = {
                 type: "nasne",
                 token: process.env.TOKEN,
-                usedVolumeSize: body.HDD.usedVolumeSize,
-                freeVolumeSize: body.HDD.freeVolumeSize,
-                totalVolumeSize: body.HDD.totalVolumeSize,
+                dataType: "HDDInfoGet",
+                usedVolumeSize: Math.round(body.HDD.usedVolumeSize / 1073741824),
+                freeVolumeSize: Math.round(body.HDD.freeVolumeSize / 1073741824),
+                totalVolumeSize: Math.round(body.HDD.totalVolumeSize / 1073741824),
                 remainVolumePercentage: Math.round(body.HDD.freeVolumeSize / body.HDD.totalVolumeSize * 100)
             };
             if (callback) { callback(result); }

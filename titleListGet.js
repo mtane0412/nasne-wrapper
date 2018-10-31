@@ -26,6 +26,7 @@ module.exports = function (Nasne) {
             const result = {
                 type: "nasne",
                 token: process.env.TOKEN,
+                dataType: "titleListGet",
                 newVideo: false,
                 item: []
             };
