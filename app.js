@@ -70,15 +70,4 @@ function nasnePost(nasneOptions) {
 		});
 }
 
-// 毎時10分に番組チェック
-const cronJob = require('cron').CronJob;
-const cronTime = "0 10 * * * *";
-
-const job = new cronJob({
-	cronTime: cronTime,
-	onTick: nasnePost(nasneOptions),
-	start: false,
-	timezone: "Asia/Tokyo"
-})
-
-job.start();
+nasnePost(nasneOptions);
