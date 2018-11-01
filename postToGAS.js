@@ -1,5 +1,6 @@
 'use strict'
 require('dotenv').config({ PATH: __dirname + '/.env' });
+const request = require('request-promise');
 
 module.exports = function postToGAS(payload) {
     if (payload.dataType === "titleListGet") {
