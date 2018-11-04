@@ -1,6 +1,6 @@
 'use strict'
 
-require('dotenv').config({ PATH: __dirname + '/.env' });
+require('dotenv').config({ path: __dirname + '/.env' });
 const request = require('request-promise');
 const moment = require('moment');
 

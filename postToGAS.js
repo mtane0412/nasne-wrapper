@@ -1,5 +1,5 @@
 'use strict'
-require('dotenv').config({ PATH: __dirname + '/.env' });
+require('dotenv').config({ path: __dirname + '/.env' });
 const request = require('request-promise');
 
 module.exports = function postToGAS(payload) {
@@ -14,6 +14,7 @@ module.exports = function postToGAS(payload) {
                 body: JSON.stringify(payload)
             };
             request(options, function (error, response, body) {
+                if (error) { throw error; }
                 console.log(`${new Date()} Update has been sent.`);
             })
         } else {
@@ -22,7 +23,7 @@ module.exports = function postToGAS(payload) {
     } else if (payload.dataType === "HDDInfoGet") {
         if (payload.remainVolumePercentage < 10) {
             request(options, function (error, response, body) {
-                if (error) { console.log(error) };
+                if (error) { throw error };
                 console.log(`${new Date()} HDD Information has been sent.`);
             })
         } else {
