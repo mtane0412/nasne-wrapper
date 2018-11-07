@@ -16,7 +16,7 @@ module.exports = function (Nasne) {
                 startingIndex: '0',
                 requestedCount: '0',
                 sortCriteria: '0',
-                withDescriptionLong: '0',
+                withDescriptionLong: '1',
                 withUserData: '0'
             },
             timeout: 60000,

@@ -15,8 +15,13 @@ class Nasne {
     }
 }
 
+// schedule
 require('./titleListGet')(Nasne);
+require('./reservedListGet')(Nasne);
+
+// status
 require('./HDDInfoGet')(Nasne);
+require('./HDDListGet')(Nasne);
 require('./boxNameGet')(Nasne);
 require('./currDateGet')(Nasne);
 require('./HDDPowerSavingModeGet')(Nasne);
