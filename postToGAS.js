@@ -38,7 +38,7 @@ module.exports = function postToGAS(payload) {
         payload.body.HDD.totalVolumeSize = Math.round(payload.body.HDD.totalVolumeSize / 1073741824);
 
         // 残りHDD容量(%)
-        payload.body.HDD.remainVolumePercentage = Math.round(payload.body.HDD.freeVolumeSize / body.HDD.totalVolumeSize * 100);
+        payload.body.HDD.remainVolumePercentage = Math.round(payload.body.HDD.freeVolumeSize / payload.body.HDD.totalVolumeSize * 100);
 
         if (payload.body.HDD.remainVolumePercentage < 10) {
             request(options, function (error, response, body) {
