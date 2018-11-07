@@ -30,28 +30,8 @@ module.exports = function (Nasne) {
             const result = {
                 type: "nasne",
                 dataType: "titleListGet",
-                body: {
-                    newVideo: false,
-                    item: []
-                }
+                body: body
             };
-            body.item.forEach(function (key) {
-                if (moment().diff(moment(key.startDateTime), 'hours') <= 1) result.body.newVideo = true;
-                let program = {
-                    id: key.id,
-                    title: key.title // 特殊文字を置き換え
-                        .replace(/\ue195/g, "[終]")
-                        .replace(/\ue193/g, "[新]")
-                        .replace(/\ue0fe/g, "[字]")
-                        .replace(/\uE184/g, "[解]")
-                        .replace(/\uE183/g, "[多]")
-                        .replace(/\uE180/g, "[デ]"),
-                    description: key.description,
-                    startDateTime: key.startDateTime,
-                    duration: key.duration
-                }
-                result.body.item.push(program);
-            })
             if (callback) {
                 callback(result);
             }
