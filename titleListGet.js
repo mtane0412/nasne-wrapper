@@ -1,6 +1,8 @@
 'use strict'
 
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config({
+    path: __dirname + '/.env'
+});
 const request = require('request-promise');
 const moment = require('moment');
 
@@ -22,16 +24,19 @@ module.exports = function (Nasne) {
             json: true
         }
         request(options, function (error, response, body) {
-            if (error) { console.log(error); }
+            if (error) {
+                throw error;
+            }
             const result = {
                 type: "nasne",
-                token: process.env.TOKEN,
                 dataType: "titleListGet",
-                newVideo: false,
-                item: []
+                body: {
+                    newVideo: false,
+                    item: []
+                }
             };
             body.item.forEach(function (key) {
-                if (moment().diff(moment(key.startDateTime), 'hours') < 2) result.newVideo = true;
+                if (moment().diff(moment(key.startDateTime), 'hours') <= 1) result.body.newVideo = true;
                 let program = {
                     id: key.id,
                     title: key.title // 特殊文字を置き換え
@@ -45,9 +50,11 @@ module.exports = function (Nasne) {
                     startDateTime: key.startDateTime,
                     duration: key.duration
                 }
-                result.item.push(program);
+                result.body.item.push(program);
             })
-            if (callback) { callback(result); }
+            if (callback) {
+                callback(result);
+            }
             return result;
         })
     }

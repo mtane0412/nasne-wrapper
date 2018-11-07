@@ -6,12 +6,9 @@ require('dotenv').config({
 const request = require('request-promise');
 
 module.exports = function (Nasne) {
-    Nasne.prototype.HDDInfoGet = (callback) => {
+    Nasne.prototype.downloadingPermissionGet = (callback) => {
         const options = {
-            url: `http://${process.env.NASNE_IP}:64210/status/HDDInfoGet`,
-            qs: {
-                id: '0'
-            },
+            url: `http://${process.env.NASNE_IP}:64210/status/downloadingPermissionGet`,
             timeout: 60000,
             method: "GET",
             json: true
@@ -22,12 +19,9 @@ module.exports = function (Nasne) {
             }
             const result = {
                 type: "nasne",
-                dataType: "HDDInfoGet",
+                dataType: "downloadingPermissionGet",
                 body: {
-                    usedVolumeSize: Math.round(body.HDD.usedVolumeSize / 1073741824),
-                    freeVolumeSize: Math.round(body.HDD.freeVolumeSize / 1073741824),
-                    totalVolumeSize: Math.round(body.HDD.totalVolumeSize / 1073741824),
-                    remainVolumePercentage: Math.round(body.HDD.freeVolumeSize / body.HDD.totalVolumeSize * 100)
+                    body
                 }
             };
             if (callback) {

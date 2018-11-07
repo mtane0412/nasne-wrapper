@@ -1,10 +1,13 @@
 'use strict'
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config({
+    path: __dirname + '/.env'
+});
 const request = require('request-promise');
 
 module.exports = function postToGAS(payload) {
+    payload.token = process.env.TOKEN; // GASのアクセストークン
     if (payload.dataType === "titleListGet") {
-        if (payload.newVideo) {
+        if (payload.body.newVideo) {
             const options = {
                 uri: process.env.GAS_URL,
                 method: "POST",
@@ -14,20 +17,24 @@ module.exports = function postToGAS(payload) {
                 body: JSON.stringify(payload)
             };
             request(options, function (error, response, body) {
-                if (error) { throw error; }
+                if (error) {
+                    throw error;
+                }
                 console.log(`${new Date()} Update has been sent.`);
             })
         } else {
             console.log(`${new Date()} No Update`);
         }
     } else if (payload.dataType === "HDDInfoGet") {
-        if (payload.remainVolumePercentage < 10) {
+        if (payload.body.remainVolumePercentage < 10) {
             request(options, function (error, response, body) {
-                if (error) { throw error };
+                if (error) {
+                    throw error
+                };
                 console.log(`${new Date()} HDD Information has been sent.`);
             })
         } else {
-            console.log(`${new Date()} HDD capacity ${payload.remainVolumePercentage}%`);
+            console.log(`${new Date()} HDD capacity ${payload.body.remainVolumePercentage}%`);
         }
     } else {
         console.log("error: dataType didn't match");
