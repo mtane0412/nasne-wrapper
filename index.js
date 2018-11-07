@@ -1,7 +1,7 @@
 'use strict'
 
 const Nasne = require('./nasne.js');
-const postToGAS = require('./postToGAS.js');
+const postToGAS = require('./lib/postToGAS.js');
 
 const nasne = new Nasne('192.168.11.2');
 
