@@ -15,7 +15,6 @@
   "dependencies": {
     "cron": "^1.5.0",
     "dotenv": "^6.1.0",
-    "moment": "^2.22.2",
     "request": "^2.88.0"
   }
 }
