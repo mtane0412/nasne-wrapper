@@ -13,9 +13,7 @@ class Nasne {
 
     fetch(method, callback, supplementary) {
         const url = getUrl(method, this.ip);
-        console.log(url);
         const queryString = getQueryString(method, supplementary);
-        console.log(queryString);
         const options = {
             url: url,
             qs: queryString,
