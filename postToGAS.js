@@ -7,30 +7,26 @@ const request = require('request-promise');
 module.exports = function postToGAS(payload) {
     payload.token = process.env.TOKEN; // GASのアクセストークン
     if (payload.dataType === "titleListGet") {
-        if (payload.body.newVideo) {
-            const options = {
-                uri: process.env.GAS_URL,
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload)
-                    .replace(/\ue195/g, "[終]")
-                    .replace(/\ue193/g, "[新]")
-                    .replace(/\ue0fe/g, "[字]")
-                    .replace(/\uE184/g, "[解]")
-                    .replace(/\uE183/g, "[多]")
-                    .replace(/\uE180/g, "[デ]")
-            };
-            request(options, function (error, response, body) {
-                if (error) {
-                    throw error;
-                }
-                console.log(`${new Date()} Update has been sent.`);
-            })
-        } else {
-            console.log(`${new Date()} No Update`);
-        }
+        const options = {
+            uri: process.env.GAS_URL,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload)
+                .replace(/\ue195/g, "[終]")
+                .replace(/\ue193/g, "[新]")
+                .replace(/\ue0fe/g, "[字]")
+                .replace(/\uE184/g, "[解]")
+                .replace(/\uE183/g, "[多]")
+                .replace(/\uE180/g, "[デ]")
+        };
+        request(options, function (error, response, body) {
+            if (error) {
+                throw error;
+            }
+            console.log(`${new Date()} Nasne program list was sent.`);
+        })
     } else if (payload.dataType === "HDDInfoGet") {
         // GBに変換
         payload.body.HDD.usedVolumeSize = Math.round(payload.body.HDD.usedVolumeSize / 1073741824);
