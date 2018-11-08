@@ -88,10 +88,10 @@ module.exports = function checkEndpoints(Nasne) {
             for (let i in responses) {
                 if (!responses[i].body) {
                     result.noRes++;
-                    result.noResEndpoints.push(responses[i].dataType);
+                    result.noResEndpoints.push(responses[i].endpoint);
                 } else {
                     result.normalRes++;
-                    result.normalResEndpoints.push(responses[i].dataType);
+                    result.normalResEndpoints.push(responses[i].endpoint);
                 }
             }
             return result;

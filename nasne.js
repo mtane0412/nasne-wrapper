@@ -32,7 +32,7 @@ class Nasne {
             }
             const result = {
                 type: "nasne",
-                dataType: endpoint,
+                endpoint: endpoint,
                 body: body
             };
             if (callback) {
