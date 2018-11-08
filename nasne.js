@@ -1,7 +1,8 @@
 'use strict'
 const request = require('request');
-const getUrl = require('./lib/getUrl');
-const getQueryString = require('./lib/getQueryString');
+const getUrl = require('./util/getUrl');
+const getQueryString = require('./util/getQueryString');
+const checkEndpoints = require('./util/checkEndpoints');
 
 class Nasne {
     constructor(ip) {
@@ -12,6 +13,10 @@ class Nasne {
     }
 
     fetch(method, callback, supplementary) {
+        if (method === 'test') {
+            const self = this;
+            return checkEndpoints(self);
+        }
         const url = getUrl(method, this.ip);
         const queryString = getQueryString(method, supplementary);
         const options = {
@@ -24,9 +29,6 @@ class Nasne {
         request(options, function (error, response, body) {
             if (error) {
                 throw error;
-            }
-            if (!body) {
-                throw new Error("No response.");
             }
             const result = {
                 type: "nasne",
