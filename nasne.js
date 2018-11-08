@@ -12,13 +12,13 @@ class Nasne {
         this.ip = ip;
     }
 
-    fetch(method, callback, supplementary) {
-        if (method === 'test') {
+    fetch(endpoint, callback, supplementary) {
+        if (endpoint === 'test') {
             const self = this;
             return checkEndpoints(self);
         }
-        const url = getUrl(method, this.ip);
-        const queryString = getQueryString(method, supplementary);
+        const url = getUrl(endpoint, this.ip);
+        const queryString = getQueryString(endpoint, supplementary);
         const options = {
             url: url,
             qs: queryString,
@@ -32,7 +32,7 @@ class Nasne {
             }
             const result = {
                 type: "nasne",
-                dataType: method,
+                dataType: endpoint,
                 body: body
             };
             if (callback) {

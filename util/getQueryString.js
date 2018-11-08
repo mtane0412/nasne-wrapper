@@ -1,6 +1,6 @@
-module.exports = function getQueryString(method, supplementary) {
+module.exports = function getQueryString(endpoint, supplementary) {
     let queryString;
-    switch (method) {
+    switch (endpoint) {
         case 'titleListGet':
         case 'reservedListGet':
             queryString = {

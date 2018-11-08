@@ -1,4 +1,4 @@
-const methods = {
+const endpoints = {
     chEpg: [
         'channelLogoDataGet',
         'EPGGet',
@@ -35,9 +35,9 @@ const methods = {
     ]
 }
 
-function findPath(method) {
-    for (let key in methods) {
-        if (methods[key].indexOf(method) != -1) {
+function findPath(endpoint) {
+    for (let key in endpoints) {
+        if (endpoints[key].indexOf(endpoint) != -1) {
             return key.replace('_', '/');
         }
     }
@@ -45,13 +45,13 @@ function findPath(method) {
 }
 
 
-module.exports = function getUrl(method, ip) {
+module.exports = function getUrl(endpoint, ip) {
     const nasneIP = ip;
-    let path = findPath(method);
-    if (path === 'schedule' || method === 'titleListGet') {
+    let path = findPath(endpoint);
+    if (path === 'schedule' || endpoint === 'titleListGet') {
         port = '64220';
     } else {
         port = '64210';
     }
-    return `http://${nasneIP}:${port}/${path}/${method}`
+    return `http://${nasneIP}:${port}/${path}/${endpoint}`
 }
