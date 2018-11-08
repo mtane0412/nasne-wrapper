@@ -85,7 +85,6 @@ module.exports = function checkEndpoints(Nasne) {
         .then((responsesPromise) => {
             const responses = (responsesPromise);
             result.total = responses.length;
-
             for (let i in responses) {
                 if (!responses[i].body) {
                     result.noRes++;
@@ -95,7 +94,6 @@ module.exports = function checkEndpoints(Nasne) {
                     result.normalResEndpoints.push(responses[i].dataType);
                 }
             }
-
             return result;
         }).then((result) => {
             console.log(result);
