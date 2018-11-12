@@ -60,44 +60,48 @@ const endpoints = [
 ]
 
 
-module.exports = function checkEndpoints(Nasne) {
+module.exports = (Nasne, endpoint) => {
     const self = Nasne;
-
     const result = {
-        total: 0,
-        normalRes: 0,
-        normalResEndpoints: [],
-        noRes: 0,
-        noResEndpoints: []
+        success: [],
+        clientError: [],
+        serverError: [],
+        unknownError: []
     };
-    const responsesPromise = [];
-    const fetchPromise = (endpoint) => {
-        return new Promise((resolve) => {
-            self.fetch(endpoint, resolve);
-        })
+    // 引数のエンドポイントをチェック
+    if (endpoint) {
+        self.fetch(endpoint)
+            .then((body) => {
+                console.log(`200 - ${endpoint}`);
+            })
+            .catch(error => {
+                console.log(`${error.statusCode} - ${endpoint}`);
+            })
+        return;
     }
 
+    // 全チェック
+    console.log("StatusCode - Endpoint");
+    console.log("----------------------");
     for (let endpoint of endpoints) {
-        responsesPromise.push(fetchPromise(endpoint));
-    }
-
-    Promise.all(responsesPromise)
-        .then((responsesPromise) => {
-            const responses = (responsesPromise);
-            result.total = responses.length;
-            for (let i in responses) {
-                if (!responses[i].body) {
-                    result.noRes++;
-                    result.noResEndpoints.push(responses[i].endpoint);
-                } else {
-                    result.normalRes++;
-                    result.normalResEndpoints.push(responses[i].endpoint);
+        self.fetch(endpoint)
+            .then((body) => {
+                result.success.push(endpoint);
+                console.log(`200 - ${endpoint}`);
+            })
+            .catch(error => {
+                switch (error.statusCode) {
+                    case 400:
+                        result.clientError.push(endpoint);
+                        break;
+                    case 500:
+                        result.serverError.push(endpoints);
+                        break;
+                    default:
+                        result.unknownError.push(endpoints);
+                        break;
                 }
-            }
-            return result;
-        }).then((result) => {
-            console.log(result);
-        }).catch((error) => {
-            console.log(error);
-        })
+                console.log(`${error.statusCode} - ${endpoint}`);
+            })
+    }
 }

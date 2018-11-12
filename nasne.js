@@ -13,10 +13,6 @@ class Nasne {
     }
 
     fetch(endpoint, option = 0) {
-        if (endpoint === 'test') {
-            const self = this;
-            return checkEndpoints(self);
-        }
         const url = getUrl(endpoint, this.ip);
         const queryString = getQueryString(endpoint, option);
         const options = {
@@ -27,6 +23,11 @@ class Nasne {
             json: true
         }
         return request(options)
+    }
+
+    checkEndpoints(endpoint) {
+        const self = this;
+        return checkEndpoints(self, endpoint);
     }
 }
 
