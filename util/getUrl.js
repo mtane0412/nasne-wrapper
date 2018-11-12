@@ -1,3 +1,4 @@
+'use strict'
 const endpoints = {
     chEpg: [
         'channelLogoDataGet',
@@ -47,6 +48,7 @@ function findPath(endpoint) {
 
 module.exports = function getUrl(endpoint, ip) {
     const nasneIP = ip;
+    let port;
     let path = findPath(endpoint);
     if (path === 'schedule' || endpoint === 'titleListGet') {
         port = '64220';

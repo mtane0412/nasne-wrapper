@@ -1,5 +1,6 @@
-module.exports = function getQueryString(endpoint, supplementary) {
-    let queryString;
+'use strict'
+module.exports = function getQueryString(endpoint, option) {
+    let queryString = {};
     switch (endpoint) {
         case 'titleListGet':
         case 'reservedListGet':
@@ -14,16 +15,10 @@ module.exports = function getQueryString(endpoint, supplementary) {
             }
             break;
         case 'HDDInfoGet':
-            if (!supplementary) {
-                queryString = {
-                    id: '0'
-                }
-            } else if (supplementary == 0 || supplementary == 1) {
-                queryString = {
-                    id: String(supplementary)
-                }
+            if (option === 0 || option === 1 || option === "0" || option === "1") {
+                queryString.id = String(option);
             } else {
-                throw new Error(`${supplementary} は不正な引数です。\n 0: 内蔵HDD(デフォルト) \n 1: 外付けHDD`);
+                throw TypeError(`${option} は不正な引数です。\n 0: 内蔵HDD(デフォルト) \n 1: 外付けHDD`);
             }
             break;
         default:

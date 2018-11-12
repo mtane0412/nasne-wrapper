@@ -1,5 +1,5 @@
 'use strict'
-const request = require('request');
+const request = require('request-promise');
 const getUrl = require('./util/getUrl');
 const getQueryString = require('./util/getQueryString');
 const checkEndpoints = require('./util/checkEndpoints');
@@ -7,18 +7,18 @@ const checkEndpoints = require('./util/checkEndpoints');
 class Nasne {
     constructor(ip) {
         if (!ip) {
-            throw new Error("nasneのIPアドレスを指定してください");
+            throw typeError("nasneのIPアドレスを指定してください");
         }
         this.ip = ip;
     }
 
-    fetch(endpoint, callback, supplementary) {
+    fetch(endpoint, option = 0) {
         if (endpoint === 'test') {
             const self = this;
             return checkEndpoints(self);
         }
         const url = getUrl(endpoint, this.ip);
-        const queryString = getQueryString(endpoint, supplementary);
+        const queryString = getQueryString(endpoint, option);
         const options = {
             url: url,
             qs: queryString,
@@ -26,20 +26,7 @@ class Nasne {
             method: "GET",
             json: true
         }
-        request(options, function (error, response, body) {
-            if (error) {
-                throw error;
-            }
-            const result = {
-                type: "nasne",
-                endpoint: endpoint,
-                body: body
-            };
-            if (callback) {
-                callback(result);
-            }
-            return body;
-        })
+        return request(options)
     }
 }
 
