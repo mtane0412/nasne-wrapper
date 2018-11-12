@@ -36,7 +36,7 @@ const endpoints = {
     ]
 }
 
-function findPath(endpoint) {
+const findPath = (endpoint) => {
     for (let key in endpoints) {
         if (endpoints[key].indexOf(endpoint) != -1) {
             return key.replace('_', '/');
@@ -46,7 +46,7 @@ function findPath(endpoint) {
 }
 
 
-module.exports = function getUrl(endpoint, ip) {
+const getUrl = (endpoint, ip) => {
     const nasneIP = ip;
     let port;
     let path = findPath(endpoint);
@@ -57,3 +57,5 @@ module.exports = function getUrl(endpoint, ip) {
     }
     return `http://${nasneIP}:${port}/${path}/${endpoint}`
 }
+
+module.exports = getUrl;

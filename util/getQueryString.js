@@ -1,5 +1,6 @@
 'use strict'
-module.exports = function getQueryString(endpoint, option) {
+
+const getQueryString = (endpoint, option) => {
     let queryString = {};
     switch (endpoint) {
         case 'titleListGet':
@@ -27,3 +28,5 @@ module.exports = function getQueryString(endpoint, option) {
     }
     return queryString;
 }
+
+module.exports = getQueryString;
