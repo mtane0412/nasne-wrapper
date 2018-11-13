@@ -1,14 +1,14 @@
 {
-  "name": "nasne-checker",
+  "name": "nasne-wrapper",
   "version": "1.0.0",
-  "description": "Check the local Nasne and send a POST request.",
+  "description": "A simple wrapper for nasne API.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:mtane0412/nasne-checker.git"
+    "url": "https://github.com/mtane0412/nasne-wrapper.git"
   },
   "author": "mtane0412",
   "license": "ISC",
