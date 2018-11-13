@@ -10,7 +10,7 @@ const Nasne = require('./nasne.js');
 // nasneのIPでインスタンスを作成
 const nasne = new Nasne('192.168.11.2');
 
-// fetchメソッドでnasneのエンドポイントを指定するとPromiseが返ってくる
+// fetchメソッドでnasneのエンドポイントを指定するとPromiseが返ってくる
 nasne.fetch("titleListGet")
     .then(async titleList => {
         let HDDInfo = await nasne.fetch("HDDInfoGet");
