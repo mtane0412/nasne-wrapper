@@ -1,8 +1,9 @@
 # nasne-wrapper
 
-## 使い方
+## 使い方
 
 ### 使用例
+
 ```
 const Nasne = require('./nasne.js');
 
@@ -23,7 +24,7 @@ nasne.fetch("titleListGet")
     })
 ```
 
-### エンドポイントのチェック
+### エンドポイントのチェック
 
 `checkEndpoints`メソッドでエンドポイントを指定するとステータスコードを返します。
 ```
