@@ -4,7 +4,7 @@
 
 ### 使用例
 
-```
+```JavaScript
 const Nasne = require('./nasne.js');
 
 // nasneのIPでインスタンスを作成
@@ -27,13 +27,13 @@ nasne.fetch("titleListGet")
 ### エンドポイントのチェック
 
 `checkEndpoints`メソッドでエンドポイントを指定するとステータスコードを返します。
-```
+```JavaScript
 nasne.checkEndpoints('titleListGet');
 // 200 - titleListGet
 ```
 
 引数なしで全チェックします。
-```
+```JavaScript
 nasne.checkEndpoints();
 // 400 - channelLogoDataGet
 // 400 - EPGStoreStart
