@@ -26,16 +26,16 @@ nasne.fetch("titleListGet")
 
 ### エンドポイントのチェック
 
-`checkEndpoints`メソッドでエンドポイントを指定するとステータスコードを返します。
+`checkEndpoint`メソッドでエンドポイントを指定するとステータスコードを返します。
 
 ```JavaScript
-nasne.checkEndpoints('titleListGet');
+nasne.checkEndpoint('titleListGet');
 // 200 - titleListGet
 ```
 
 引数なしで全チェックします。
 ```JavaScript
-nasne.checkEndpoints();
+nasne.checkEndpoint();
 // 400 - channelLogoDataGet
 // 400 - EPGStoreStart
 // 400 - EPGGet

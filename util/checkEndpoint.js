@@ -60,7 +60,7 @@ const endpoints = [
 ]
 
 
-const checkEndpoints = (Nasne, endpoint) => {
+const checkEndpoint = (Nasne, endpoint) => {
     const self = Nasne;
     const result = {
         success: [],
@@ -104,4 +104,4 @@ const checkEndpoints = (Nasne, endpoint) => {
     }
 }
 
-module.exports = checkEndpoints;
+module.exports = checkEndpoint;

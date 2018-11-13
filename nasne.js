@@ -2,7 +2,7 @@
 const request = require('request-promise');
 const getUrl = require('./util/getUrl');
 const getQueryString = require('./util/getQueryString');
-const checkEndpoints = require('./util/checkEndpoints');
+const checkEndpoint = require('./util/checkEndpoint');
 
 class Nasne {
     constructor(ip) {
@@ -25,9 +25,9 @@ class Nasne {
         return request(options)
     }
 
-    checkEndpoints(endpoint) {
+    checkEndpoint(endpoint) {
         const self = this;
-        return checkEndpoints(self, endpoint);
+        return checkEndpoint(self, endpoint);
     }
 }
 
