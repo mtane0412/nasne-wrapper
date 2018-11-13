@@ -81,8 +81,6 @@ const checkEndpoints = (Nasne, endpoint) => {
     }
 
     // 全チェック
-    console.log("StatusCode - Endpoint");
-    console.log("----------------------");
     for (let endpoint of endpoints) {
         self.fetch(endpoint)
             .then((body) => {
