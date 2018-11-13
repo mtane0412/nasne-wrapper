@@ -58,7 +58,7 @@ const endpoints = [{
 
 const findPath = (endpoint) => {
     let path;
-    endpoints.find(el => {
+    endpoints.forEach(el => {
         if (el.endpoint.indexOf(endpoint) !== -1) path = el.path;
     })
     return path ? path : 'status';
