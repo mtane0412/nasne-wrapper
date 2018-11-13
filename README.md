@@ -26,7 +26,8 @@ nasne.fetch("titleListGet")
 
 ### エンドポイントのチェック
 
-`checkEndpoints`メソッドでエンドポイントを指定するとステータスコードを返します。
+`checkEndpoints`メソッドでエンドポイントを指定するとステータスコードを返します。
+
 ```JavaScript
 nasne.checkEndpoints('titleListGet');
 // 200 - titleListGet
