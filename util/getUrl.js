@@ -1,48 +1,67 @@
 'use strict'
-const endpoints = {
-    chEpg: [
-        'channelLogoDataGet',
-        'EPGGet',
-        'EPGStoreStart'
-    ],
-    cma: [
-        'connectionOnlineIdGet',
-        'reconstructDatabaseProgressGet'
-    ],
-    config: [
-        'reconstructDatabaseProgressGet',
-        'NASMetaDataAnalyzeProgressGet'
-    ],
-    recorded: [
-        'titleListGet',
-        'recordedContentThumbnailGet'
-    ],
-    remoteAccess_dr: [
-        'matchingIdInfoGet',
-        'outdoorClientListGet2',
-        'registerRequestListGet'
-    ],
-    remoteAccess_sync: [
-        'registerdFolderNameGetByReceiver',
-        'reservedFolderNameGetByInitiator',
-        'syncDTVTunerListGet_2'
-    ],
-    schedule: [
-        'conflictListGet',
-        'reservedInfoBitrateGet',
-        'reservedInfoCreate',
-        'reservedInfoDelete',
-        'reservedListGet'
-    ]
-}
+const endpoints = [{
+        path: 'chEpg',
+        endpoint: [
+            'channelLogoDataGet',
+            'EPGGet',
+            'EPGStoreStart'
+        ]
+    },
+    {
+        path: 'cma',
+        endpoint: [
+            'connectionOnlineIdGet',
+            'reconstructDatabaseProgressGet'
+        ]
+    },
+    {
+        path: 'config',
+        endpoint: [
+            'reconstructDatabaseProgressGet',
+            'NASMetaDataAnalyzeProgressGet'
+        ]
+    },
+    {
+        path: 'recorded',
+        endpoint: [
+            'titleListGet',
+            'recordedContentThumbnailGet'
+        ]
+    },
+    {
+        path: 'remoteAcces/dr',
+        endpoint: [
+            'matchingIdInfoGet',
+            'outdoorClientListGet2',
+            'registerRequestListGet'
+        ]
+    },
+    {
+        path: 'remoteAcces/sync',
+        endpoint: [
+            'registerdFolderNameGetByReceiver',
+            'reservedFolderNameGetByInitiator',
+            'syncDTVTunerListGet_2'
+        ]
+    },
+    {
+        path: 'schedule',
+        endpoint: [
+            'conflictListGet',
+            'reservedInfoBitrateGet',
+            'reservedInfoCreate',
+            'reservedInfoDelete',
+            'reservedListGet'
+        ]
+    }
+];
 
 const findPath = (endpoint) => {
-    for (let key in endpoints) {
-        if (endpoints[key].indexOf(endpoint) != -1) {
-            return key.replace('_', '/');
-        }
-    }
-    return 'status';
+    let path;
+    endpoints.find(el => {
+        if (el.endpoint.indexOf(endpoint) !== -1) path = el.path;
+    })
+    return path ? path : 'status';
 }
 
 
