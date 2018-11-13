@@ -1,8 +1,8 @@
 # nasne-wrapper
 
-## 使い方
+## How to Use
 
-### 使用例
+### 基本的な使い方
 
 ```JavaScript
 const Nasne = require('./nasne.js');
