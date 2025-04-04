@@ -1,5 +1,5 @@
 'use strict'
-const request = require('request-promise');
+const axios = require('axios');
 const getUrl = require('./util/getUrl');
 const getQueryString = require('./util/getQueryString');
 const checkEndpoint = require('./util/checkEndpoint');
@@ -15,14 +15,12 @@ class Nasne {
     fetch(endpoint, option = 0) {
         const url = getUrl(endpoint, this.ip);
         const queryString = getQueryString(endpoint, option);
-        const options = {
-            url: url,
-            qs: queryString,
+        const config = {
+            params: queryString,
             timeout: 10000,
-            method: "GET",
-            json: true
         }
-        return request(options)
+        return axios.get(url, config)
+            .then(response => response.data);
     }
 
     checkEndpoint(endpoint) {
