@@ -3,6 +3,7 @@ const axios = require('axios');
 const getUrl = require('./util/getUrl');
 const getQueryString = require('./util/getQueryString');
 const checkEndpoint = require('./util/checkEndpoint');
+const formatText = require('./util/formatText');
 
 class Nasne {
     constructor(ip) {
@@ -26,6 +27,10 @@ class Nasne {
     checkEndpoint(endpoint) {
         const self = this;
         return checkEndpoint(self, endpoint);
+    }
+
+    formatText(text) {
+        return formatText(text);
     }
 }
 
