@@ -7,7 +7,7 @@ const checkEndpoint = require('./util/checkEndpoint');
 class Nasne {
     constructor(ip) {
         if (!ip) {
-            throw typeError("nasneのIPアドレスを指定してください");
+            throw TypeError("nasneのIPアドレスを指定してください");
         }
         this.ip = ip;
     }
