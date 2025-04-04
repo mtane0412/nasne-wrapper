@@ -71,11 +71,12 @@ const checkEndpoint = (Nasne, endpoint) => {
     // 引数のエンドポイントをチェック
     if (endpoint) {
         self.fetch(endpoint)
-            .then((body) => {
+            .then(() => {
                 console.log(`200 - ${endpoint}`);
             })
             .catch(error => {
-                console.log(`${error.statusCode} - ${endpoint}`);
+                const statusCode = error.response?.status || 500;
+                console.log(`${statusCode} - ${endpoint}`);
             })
         return;
     }
@@ -83,23 +84,24 @@ const checkEndpoint = (Nasne, endpoint) => {
     // 全チェック
     for (let endpoint of endpoints) {
         self.fetch(endpoint)
-            .then((body) => {
+            .then(() => {
                 result.success.push(endpoint);
                 console.log(`200 - ${endpoint}`);
             })
             .catch(error => {
-                switch (error.statusCode) {
+                const statusCode = error.response?.status || 500;
+                switch (statusCode) {
                     case 400:
                         result.clientError.push(endpoint);
                         break;
                     case 500:
-                        result.serverError.push(endpoints);
+                        result.serverError.push(endpoint);
                         break;
                     default:
-                        result.unknownError.push(endpoints);
+                        result.unknownError.push(endpoint);
                         break;
                 }
-                console.log(`${error.statusCode} - ${endpoint}`);
+                console.log(`${statusCode} - ${endpoint}`);
             })
     }
 }
