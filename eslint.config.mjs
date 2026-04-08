@@ -29,7 +29,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["vitest.config.ts", "tsup.config.ts"],
+    files: ["vitest.config.ts", "tsup.config.ts", "tests/**/*.ts"],
     languageOptions: {
       parserOptions: {
         project: null,
