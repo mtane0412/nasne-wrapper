@@ -4,7 +4,14 @@ import js from "@eslint/js";
 
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"] },
-  { files: ["**/*.{js,mjs,cjs}"], languageOptions: { globals: globals.browser } },
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"] },
+  { ignores: [".eslintrc.js"] },
+  {
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: { globals: { ...globals.node, ...globals.es2021 } },
+    plugins: { js },
+    extends: ["js/recommended"],
+    rules: {
+      "no-unused-vars": "error",
+    },
+  },
 ]);
