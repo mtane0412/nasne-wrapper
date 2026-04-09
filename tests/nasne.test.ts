@@ -87,6 +87,29 @@ describe("Nasne#fetch", () => {
     vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("ネットワークエラー"));
     await expect(nasne.fetch("areaInfoGet")).rejects.toThrow("ネットワークエラー");
   });
+
+  it("正常系: Content-Type が text/plain の場合はテキストを返す", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response("プレーンテキストデータ", {
+        status: 200,
+        headers: { "Content-Type": "text/plain" },
+      })
+    );
+    const result = await nasne.fetch("areaInfoGet");
+    expect(result).toBe("プレーンテキストデータ");
+  });
+
+  it("正常系: Content-Type が image/jpeg の場合は ArrayBuffer を返す", async () => {
+    const バイナリデータ = new Uint8Array([1, 2, 3, 4]).buffer;
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(バイナリデータ, {
+        status: 200,
+        headers: { "Content-Type": "image/jpeg" },
+      })
+    );
+    const result = await nasne.fetch("recordedContentThumbnailGet");
+    expect(result).toBeInstanceOf(ArrayBuffer);
+  });
 });
 
 describe("Nasne#checkEndpoint", () => {
@@ -149,6 +172,27 @@ describe("Nasne#checkEndpoint", () => {
     const result = await nasne.checkEndpoint("areaInfoGet");
 
     expect(result.success).toContain("areaInfoGet");
+  });
+
+  it("200 OK でも本文が空のエンドポイントは success に入る（ステータスのみ判定）", async () => {
+    // 本文が空の場合 response.json() は SyntaxError をスローするが、
+    // checkEndpoint はステータスコードのみで判定するため success に入る
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response("", {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+    const result = await nasne.checkEndpoint("areaInfoGet");
+    expect(result.success).toContain("areaInfoGet");
+  });
+
+  it("4xx レスポンスは本文を読まずに clientError に分類される", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response("", { status: 404 })
+    );
+    const result = await nasne.checkEndpoint("areaInfoGet");
+    expect(result.clientError).toContain("areaInfoGet");
   });
 });
 
