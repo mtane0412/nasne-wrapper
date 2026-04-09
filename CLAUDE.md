@@ -29,10 +29,12 @@ npm run build         # ビルド（ESM + CJS）
 src/
 ├── index.ts        # エントリポイント（public API）
 ├── endpoints.ts    # エンドポイント定義・URL構築・クエリ構築
+├── format-text.ts  # 特殊Unicode→日本語変換
 ├── constants.ts    # 定数（ポート番号・タイムアウト）
 └── types.ts        # 型定義
 tests/
-└── endpoints.test.ts
+├── endpoints.test.ts
+└── format-text.test.ts
 ```
 
 ## 注意事項
