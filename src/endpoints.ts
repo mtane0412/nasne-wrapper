@@ -111,7 +111,7 @@ const STATUS_ENDPOINTS: EndpointName[] = [
 export const getUrl = (endpoint: EndpointName, ip: string): string => {
   // マッピングテーブルからパスを解決する
   const found = ENDPOINT_PATH_MAP.find((entry) =>
-    (entry.endpoints as readonly string[]).includes(endpoint),
+    entry.endpoints.includes(endpoint),
   );
   const path = found ? found.path : "status";
 
@@ -168,6 +168,6 @@ export const getQueryString = (
  * checkEndpoint メソッドで全エンドポイントを検査する際に使用する
  */
 export const ALL_ENDPOINTS: readonly EndpointName[] = [
-  ...ENDPOINT_PATH_MAP.flatMap((entry) => entry.endpoints as EndpointName[]),
+  ...ENDPOINT_PATH_MAP.flatMap((entry) => entry.endpoints),
   ...STATUS_ENDPOINTS,
 ];
