@@ -40,7 +40,7 @@ const ENDPOINT_PATH_MAP = [
       "reservedListGet",
     ],
   },
-] as const;
+] as const satisfies readonly { path: string; endpoints: readonly EndpointName[] }[];
 
 /** status 配下のエンドポイント一覧 */
 const STATUS_ENDPOINTS: EndpointName[] = [

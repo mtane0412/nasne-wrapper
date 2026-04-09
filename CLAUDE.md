@@ -2,7 +2,7 @@
 
 ## プロジェクト概要
 
-nasne APIのラッパーライブラリ。Node.js 18+ のネイティブ fetch を使用。
+nasne APIのラッパーライブラリ。Node.js 20+ のネイティブ fetch を使用。
 
 ## 開発コマンド
 
@@ -18,20 +18,20 @@ npm run build         # ビルド（ESM + CJS）
 ## 技術スタック
 
 - **言語**: TypeScript (ESM)
-- **HTTP**: Node.js ネイティブ fetch（Node.js 18+）
+- **HTTP**: Node.js ネイティブ fetch（Node.js 20+）
 - **テスト**: Vitest
 - **ビルド**: tsup（ESM + CJS デュアル出力）
 - **Lint**: ESLint Flat Config + typescript-eslint
 
 ## ディレクトリ構成
 
-```
+```text
 src/
 ├── index.ts        # エントリポイント（public API）
 ├── nasne.ts        # Nasneクラス
 ├── endpoints.ts    # エンドポイント定義・URL構築・クエリ構築
-├── constants.ts    # 定数（ポート番号・タイムアウト）
 ├── format-text.ts  # 特殊Unicode→日本語変換
+├── constants.ts    # 定数（ポート番号・タイムアウト）
 └── types.ts        # 型定義
 tests/
 ├── nasne.test.ts
@@ -42,5 +42,5 @@ tests/
 ## 注意事項
 
 - `remoteAcces`（sが1つ）はnasne API側の仕様。タイポではない
-- ネイティブ fetchはNode.js 18+が必要
+- ネイティブ fetchはNode.js 20+が必要
 - `AbortSignal.timeout()` でタイムアウトを制御する

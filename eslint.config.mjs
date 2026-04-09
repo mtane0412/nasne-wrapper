@@ -4,7 +4,7 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  { ignores: ["dist/", "node_modules/"] },
+  { ignores: ["dist/", "node_modules/", "nasne.js", "util/"] },
   {
     files: ["**/*.{js,mjs,cjs}"],
     languageOptions: { globals: { ...globals.node, ...globals.es2021 } },
