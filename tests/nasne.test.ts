@@ -7,11 +7,13 @@ import { Nasne } from "../src/nasne.js";
 
 /** fetch をモックして指定レスポンスを返すヘルパー */
 function mockFetch(body: unknown, status = 200): void {
-  vi.spyOn(globalThis, "fetch").mockResolvedValue(
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    })
+  vi.spyOn(globalThis, "fetch").mockImplementation(() =>
+    Promise.resolve(
+      new Response(JSON.stringify(body), {
+        status,
+        headers: { "Content-Type": "application/json" },
+      })
+    )
   );
 }
 
