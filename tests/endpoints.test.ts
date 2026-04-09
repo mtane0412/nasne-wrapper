@@ -1,56 +1,58 @@
 /**
  * エンドポイント定義・URL構築・クエリ文字列構築のテスト
  */
-import { describe, it, expect } from "vitest";
-import { getUrl, getQueryString, ALL_ENDPOINTS } from "../src/endpoints.js";
+import { describe, expect, it } from "vitest";
+import { ALL_ENDPOINTS, getQueryString, getUrl } from "../src/endpoints.js";
 
 describe("getUrl", () => {
   const ip = "192.168.0.1";
 
   describe("パスのルーティング", () => {
     it("chEpg 配下のエンドポイントは /chEpg/ パスになる", () => {
-      expect(getUrl("EPGGet", ip)).toBe("http://192.168.0.1:64210/chEpg/EPGGet");
+      expect(getUrl("EPGGet", ip)).toBe(
+        "http://192.168.0.1:64210/chEpg/EPGGet",
+      );
     });
 
     it("cma 配下のエンドポイントは /cma/ パスになる", () => {
       expect(getUrl("connectionOnlineIdGet", ip)).toBe(
-        "http://192.168.0.1:64210/cma/connectionOnlineIdGet"
+        "http://192.168.0.1:64210/cma/connectionOnlineIdGet",
       );
     });
 
     it("config 配下のエンドポイントは /config/ パスになる", () => {
       expect(getUrl("NASMetaDataAnalyzeProgressGet", ip)).toBe(
-        "http://192.168.0.1:64210/config/NASMetaDataAnalyzeProgressGet"
+        "http://192.168.0.1:64210/config/NASMetaDataAnalyzeProgressGet",
       );
     });
 
     it("recorded 配下のエンドポイントは /recorded/ パスになる", () => {
       expect(getUrl("recordedContentThumbnailGet", ip)).toBe(
-        "http://192.168.0.1:64210/recorded/recordedContentThumbnailGet"
+        "http://192.168.0.1:64210/recorded/recordedContentThumbnailGet",
       );
     });
 
     it("remoteAcces/dr 配下のエンドポイントは /remoteAcces/dr/ パスになる", () => {
       expect(getUrl("matchingIdInfoGet", ip)).toBe(
-        "http://192.168.0.1:64210/remoteAcces/dr/matchingIdInfoGet"
+        "http://192.168.0.1:64210/remoteAcces/dr/matchingIdInfoGet",
       );
     });
 
     it("remoteAcces/sync 配下のエンドポイントは /remoteAcces/sync/ パスになる", () => {
       expect(getUrl("syncDTVTunerListGet_2", ip)).toBe(
-        "http://192.168.0.1:64210/remoteAcces/sync/syncDTVTunerListGet_2"
+        "http://192.168.0.1:64210/remoteAcces/sync/syncDTVTunerListGet_2",
       );
     });
 
     it("schedule 配下のエンドポイントは /schedule/ パスになる", () => {
       expect(getUrl("conflictListGet", ip)).toBe(
-        "http://192.168.0.1:64220/schedule/conflictListGet"
+        "http://192.168.0.1:64220/schedule/conflictListGet",
       );
     });
 
     it("どのカテゴリにも属さないエンドポイントは /status/ パスになる", () => {
       expect(getUrl("areaInfoGet", ip)).toBe(
-        "http://192.168.0.1:64210/status/areaInfoGet"
+        "http://192.168.0.1:64210/status/areaInfoGet",
       );
     });
   });
@@ -62,7 +64,7 @@ describe("getUrl", () => {
 
     it("titleListGet はポート 64220 を使用する", () => {
       expect(getUrl("titleListGet", ip)).toBe(
-        "http://192.168.0.1:64220/recorded/titleListGet"
+        "http://192.168.0.1:64220/recorded/titleListGet",
       );
     });
 

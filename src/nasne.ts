@@ -12,10 +12,14 @@
  * ```
  */
 
-import { getUrl, getQueryString, ALL_ENDPOINTS } from "./endpoints.js";
-import { formatText as doFormatText } from "./format-text.js";
 import { REQUEST_TIMEOUT_MS } from "./constants.js";
-import type { EndpointName, CheckEndpointResult, QueryParams } from "./types.js";
+import { ALL_ENDPOINTS, getQueryString, getUrl } from "./endpoints.js";
+import { formatText as doFormatText } from "./format-text.js";
+import type {
+  CheckEndpointResult,
+  EndpointName,
+  QueryParams,
+} from "./types.js";
 
 export class Nasne {
   /** nasne 本体の IP アドレス */
@@ -44,7 +48,7 @@ export class Nasne {
     const queryParams: QueryParams = getQueryString(endpoint, option);
     if (queryParams === null) return baseUrl;
     return `${baseUrl}?${new URLSearchParams(
-      Object.entries(queryParams).map(([k, v]) => [k, String(v)])
+      Object.entries(queryParams).map(([k, v]) => [k, String(v)]),
     ).toString()}`;
   }
 
@@ -61,7 +65,7 @@ export class Nasne {
    * @returns レスポンスのパース済みデータ
    * @throws {Error} HTTP エラー（4xx/5xx）またはネットワークエラーの場合
    */
-  async fetch(endpoint: EndpointName, option = 0): Promise<unknown> {
+  async fetch(endpoint: EndpointName, option: number = 0): Promise<unknown> {
     const url = this.buildUrl(endpoint, option);
 
     const response = await fetch(url, {
@@ -93,7 +97,10 @@ export class Nasne {
    * @param option - HDD 選択オプション
    * @returns HTTP ステータスコード
    */
-  private async fetchStatus(endpoint: EndpointName, option = 0): Promise<number> {
+  private async fetchStatus(
+    endpoint: EndpointName,
+    option: number = 0,
+  ): Promise<number> {
     const url = this.buildUrl(endpoint, option);
 
     const response = await fetch(url, {
@@ -120,11 +127,15 @@ export class Nasne {
       unknownError: [],
     };
 
-    const targets: readonly EndpointName[] = endpoint ? [endpoint] : ALL_ENDPOINTS;
+    const targets: readonly EndpointName[] = endpoint
+      ? [endpoint]
+      : ALL_ENDPOINTS;
 
     // 全エンドポイントを並列に確認する（ステータスコードのみ判定・本文は読まない）
     const settled = await Promise.allSettled(
-      targets.map((ep) => this.fetchStatus(ep).then((status) => ({ ep, status })))
+      targets.map((ep) =>
+        this.fetchStatus(ep).then((status) => ({ ep, status })),
+      ),
     );
 
     for (const outcome of settled) {
