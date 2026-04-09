@@ -40,7 +40,7 @@ const allResults = await nasne.checkEndpoint();
 console.log(allResults.success);       // 200 OK のエンドポイント一覧
 console.log(allResults.clientError);   // 4xx エラーのエンドポイント一覧
 console.log(allResults.serverError);   // 5xx エラーのエンドポイント一覧
-console.log(allResults.unknownError);  // ネットワークエラー等のエンドポイント一覧
+console.log(allResults.unknownError);  // その他のエラー（ネットワークエラー・分類外ステータス等）のエンドポイント一覧
 ```
 
 ### 特殊文字の変換
@@ -83,7 +83,7 @@ formatText('\uE193\uE195映画タイトル');   // => '[新][終]映画タイト
 | `success` | `EndpointName[]` | 200 OK のエンドポイント |
 | `clientError` | `EndpointName[]` | 4xx エラーのエンドポイント |
 | `serverError` | `EndpointName[]` | 5xx エラーのエンドポイント |
-| `unknownError` | `EndpointName[]` | ネットワークエラー等のエンドポイント |
+| `unknownError` | `EndpointName[]` | その他のエラー（ネットワークエラー・分類外ステータス等）のエンドポイント |
 
 ## 謝辞
 
