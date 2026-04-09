@@ -13,14 +13,30 @@ import { PORT } from "./constants.js";
 import type { EndpointName, QueryParams } from "./types.js";
 
 /** パスとエンドポイント名のマッピング定義 */
-const ENDPOINT_PATH_MAP = [
-  { path: "chEpg", endpoints: ["channelLogoDataGet", "EPGGet", "EPGStoreStart"] },
-  { path: "cma", endpoints: ["connectionOnlineIdGet", "reconstructDatabaseProgressGet"] },
+const ENDPOINT_PATH_MAP: readonly {
+  path: string;
+  endpoints: readonly EndpointName[];
+}[] = [
+  {
+    path: "chEpg",
+    endpoints: ["channelLogoDataGet", "EPGGet", "EPGStoreStart"],
+  },
+  {
+    path: "cma",
+    endpoints: ["connectionOnlineIdGet", "reconstructDatabaseProgressGet"],
+  },
   { path: "config", endpoints: ["NASMetaDataAnalyzeProgressGet"] },
-  { path: "recorded", endpoints: ["titleListGet", "recordedContentThumbnailGet"] },
+  {
+    path: "recorded",
+    endpoints: ["titleListGet", "recordedContentThumbnailGet"],
+  },
   {
     path: "remoteAcces/dr",
-    endpoints: ["matchingIdInfoGet", "outdoorClientListGet2", "registerRequestListGet"],
+    endpoints: [
+      "matchingIdInfoGet",
+      "outdoorClientListGet2",
+      "registerRequestListGet",
+    ],
   },
   {
     path: "remoteAcces/sync",
@@ -40,7 +56,10 @@ const ENDPOINT_PATH_MAP = [
       "reservedListGet",
     ],
   },
-] as const satisfies readonly { path: string; endpoints: readonly EndpointName[] }[];
+] as const satisfies readonly {
+  path: string;
+  endpoints: readonly EndpointName[];
+}[];
 
 /** status 配下のエンドポイント一覧 */
 const STATUS_ENDPOINTS: EndpointName[] = [
@@ -92,12 +111,15 @@ const STATUS_ENDPOINTS: EndpointName[] = [
 export const getUrl = (endpoint: EndpointName, ip: string): string => {
   // マッピングテーブルからパスを解決する
   const found = ENDPOINT_PATH_MAP.find((entry) =>
-    (entry.endpoints as readonly string[]).includes(endpoint)
+    (entry.endpoints as readonly string[]).includes(endpoint),
   );
   const path = found ? found.path : "status";
 
   // schedule パスまたは titleListGet はポート 64220 を使用する
-  const port = path === "schedule" || endpoint === "titleListGet" ? PORT.SCHEDULE : PORT.DEFAULT;
+  const port =
+    path === "schedule" || endpoint === "titleListGet"
+      ? PORT.SCHEDULE
+      : PORT.DEFAULT;
 
   return `http://${ip}:${port}/${path}/${endpoint}`;
 };
@@ -121,7 +143,10 @@ const LIST_QUERY_PARAMS = {
  * @returns クエリパラメータのオブジェクト、不要な場合は null
  * @throws {TypeError} HDDInfoGet で option が 0/1 以外の場合
  */
-export const getQueryString = (endpoint: EndpointName, option = 0): QueryParams => {
+export const getQueryString = (
+  endpoint: EndpointName,
+  option: number = 0,
+): QueryParams => {
   switch (endpoint) {
     case "titleListGet":
     case "reservedListGet":
@@ -129,7 +154,7 @@ export const getQueryString = (endpoint: EndpointName, option = 0): QueryParams 
     case "HDDInfoGet":
       if (option !== 0 && option !== 1) {
         throw new TypeError(
-          `${option} は不正な引数です。\n 0: 内蔵HDD（デフォルト）\n 1: 外付けHDD`
+          `${option} は不正な引数です。\n 0: 内蔵HDD（デフォルト）\n 1: 外付けHDD`,
         );
       }
       return { id: String(option) };
@@ -143,6 +168,6 @@ export const getQueryString = (endpoint: EndpointName, option = 0): QueryParams 
  * checkEndpoint メソッドで全エンドポイントを検査する際に使用する
  */
 export const ALL_ENDPOINTS: readonly EndpointName[] = [
-  ...ENDPOINT_PATH_MAP.flatMap((entry) => [...entry.endpoints] as EndpointName[]),
+  ...ENDPOINT_PATH_MAP.flatMap((entry) => entry.endpoints as EndpointName[]),
   ...STATUS_ENDPOINTS,
 ];

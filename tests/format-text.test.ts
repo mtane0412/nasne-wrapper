@@ -2,7 +2,7 @@
  * nasne 特殊文字変換機能のテスト
  * nasne が返す Private Use Area の Unicode 文字を日本語表記に変換する
  */
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { formatText } from "../src/format-text.js";
 
 describe("formatText", () => {
@@ -34,7 +34,9 @@ describe("formatText", () => {
 
   describe("複数の特殊文字が含まれる場合", () => {
     it("複数の特殊文字をすべて変換する", () => {
-      expect(formatText("\uE195\uE193ドラマタイトル")).toBe("[終][新]ドラマタイトル");
+      expect(formatText("\uE195\uE193ドラマタイトル")).toBe(
+        "[終][新]ドラマタイトル",
+      );
     });
 
     it("同一の特殊文字が複数回出現する場合もすべて変換する", () => {

@@ -22,4 +22,7 @@ const SPECIAL_CHAR_MAP: ReadonlyArray<[RegExp, string]> = [
  * @returns 特殊文字を日本語表記に置換した文字列
  */
 export const formatText = (text: string): string =>
-  SPECIAL_CHAR_MAP.reduce((result, [pattern, replacement]) => result.replace(pattern, replacement), text);
+  SPECIAL_CHAR_MAP.reduce(
+    (result, [pattern, replacement]) => result.replace(pattern, replacement),
+    text,
+  );

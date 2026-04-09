@@ -2,18 +2,18 @@
  * Nasne クラスのテスト
  * コンストラクタ・fetch()・checkEndpoint()・formatText() の振る舞いを検証する
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Nasne } from "../src/nasne.js";
 
 /** fetch をモックして指定レスポンスを返すヘルパー */
-function mockFetch(body: unknown, status = 200): void {
+function mockFetch(body: unknown, status: number = 200): void {
   vi.spyOn(globalThis, "fetch").mockImplementation(() =>
     Promise.resolve(
       new Response(JSON.stringify(body), {
         status,
         headers: { "Content-Type": "application/json" },
-      })
-    )
+      }),
+    ),
   );
 }
 
@@ -60,7 +60,7 @@ describe("Nasne#fetch", () => {
 
     expect(spy).toHaveBeenCalledWith(
       expect.stringContaining("http://192.168.0.1:64210/status/areaInfoGet"),
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
   });
 
@@ -86,8 +86,12 @@ describe("Nasne#fetch", () => {
   });
 
   it("ネットワークエラー: fetch 自体が失敗した場合は例外が伝播する", async () => {
-    vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("ネットワークエラー"));
-    await expect(nasne.fetch("areaInfoGet")).rejects.toThrow("ネットワークエラー");
+    vi.spyOn(globalThis, "fetch").mockRejectedValue(
+      new Error("ネットワークエラー"),
+    );
+    await expect(nasne.fetch("areaInfoGet")).rejects.toThrow(
+      "ネットワークエラー",
+    );
   });
 
   it("正常系: Content-Type が text/plain の場合はテキストを返す", async () => {
@@ -95,7 +99,7 @@ describe("Nasne#fetch", () => {
       new Response("プレーンテキストデータ", {
         status: 200,
         headers: { "Content-Type": "text/plain" },
-      })
+      }),
     );
     const result = await nasne.fetch("areaInfoGet");
     expect(result).toBe("プレーンテキストデータ");
@@ -107,7 +111,7 @@ describe("Nasne#fetch", () => {
       new Response(バイナリデータ, {
         status: 200,
         headers: { "Content-Type": "image/jpeg" },
-      })
+      }),
     );
     const result = await nasne.fetch("recordedContentThumbnailGet");
     expect(result).toBeInstanceOf(ArrayBuffer);
@@ -148,7 +152,7 @@ describe("Nasne#checkEndpoint", () => {
 
   it("4xx エラーのエンドポイントは clientError に入る", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      new Response(JSON.stringify({}), { status: 400 })
+      new Response(JSON.stringify({}), { status: 400 }),
     );
 
     const result = await nasne.checkEndpoint();
@@ -159,7 +163,7 @@ describe("Nasne#checkEndpoint", () => {
 
   it("5xx エラーのエンドポイントは serverError に入る", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      new Response(JSON.stringify({}), { status: 500 })
+      new Response(JSON.stringify({}), { status: 500 }),
     );
 
     const result = await nasne.checkEndpoint();
@@ -183,7 +187,7 @@ describe("Nasne#checkEndpoint", () => {
       new Response("", {
         status: 200,
         headers: { "Content-Type": "application/json" },
-      })
+      }),
     );
     const result = await nasne.checkEndpoint("areaInfoGet");
     expect(result.success).toContain("areaInfoGet");
@@ -191,7 +195,7 @@ describe("Nasne#checkEndpoint", () => {
 
   it("4xx レスポンスは本文を読まずに clientError に分類される", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      new Response("", { status: 404 })
+      new Response("", { status: 404 }),
     );
     const result = await nasne.checkEndpoint("areaInfoGet");
     expect(result.clientError).toContain("areaInfoGet");

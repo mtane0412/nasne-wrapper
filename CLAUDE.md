@@ -21,7 +21,7 @@ npm run build         # ビルド（ESM + CJS）
 - **HTTP**: Node.js ネイティブ fetch（Node.js 20+）
 - **テスト**: Vitest
 - **ビルド**: tsup（ESM + CJS デュアル出力）
-- **Lint**: ESLint Flat Config + typescript-eslint
+- **Lint/Format**: Biome
 
 ## ディレクトリ構成
 
