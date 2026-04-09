@@ -28,15 +28,11 @@ npm run build         # ビルド（ESM + CJS）
 ```text
 src/
 ├── index.ts        # エントリポイント（public API）
-├── nasne.ts        # Nasneクラス
 ├── endpoints.ts    # エンドポイント定義・URL構築・クエリ構築
 ├── constants.ts    # 定数（ポート番号・タイムアウト）
-├── format-text.ts  # 特殊Unicode→日本語変換
 └── types.ts        # 型定義
 tests/
-├── nasne.test.ts
-├── endpoints.test.ts
-└── format-text.test.ts
+└── endpoints.test.ts
 ```
 
 ## 注意事項
