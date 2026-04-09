@@ -1,51 +1,85 @@
 # nasne-wrapper
 
-## How to Use
+nasne（ソニーのネットワークレコーダー）の HTTP API ラッパーライブラリ。
 
-### 基本的な使い方
+## 要件
 
-```JavaScript
-const Nasne = require('./nasne.js');
+- Node.js 20+
 
-// nasneのIPでインスタンスを作成
-const nasne = new Nasne('192.168.11.2');
+## インストール
 
-// fetchメソッドでnasneのエンドポイントを指定するとPromiseが返ってくる
-nasne.fetch("titleListGet")
-    .then(async titleList => {
-        let HDDInfo = await nasne.fetch("HDDInfoGet");
-        let boxStatusList = await nasne.fetch("boxStatusListGet");
-        console.log(titleList);
-        console.log(HDDInfo);
-        console.log(boxStatusList);
-    })
-    .catch(error => {
-        throw error;
-    })
+```bash
+npm install nasne-wrapper
+```
+
+## 使い方
+
+```typescript
+import { Nasne } from 'nasne-wrapper';
+
+// nasne の IP アドレスでインスタンスを作成
+const nasne = new Nasne('192.168.0.1');
+
+// fetch() でエンドポイントを呼び出す
+const titleList = await nasne.fetch('titleListGet');
+const hddInfo = await nasne.fetch('HDDInfoGet');          // 内蔵HDD（デフォルト）
+const externalHdd = await nasne.fetch('HDDInfoGet', 1);  // 外付けHDD
+
+console.log(titleList);
 ```
 
 ### エンドポイントのチェック
 
-`checkEndpoint`メソッドでエンドポイントを指定するとステータスコードを返します。
+```typescript
+// 個別チェック
+const result = await nasne.checkEndpoint('titleListGet');
+console.log(result.success);  // ['titleListGet']
 
-```JavaScript
-nasne.checkEndpoint('titleListGet');
-// 200 - titleListGet
+// 全エンドポイントを並列チェック
+const allResults = await nasne.checkEndpoint();
+console.log(allResults.success);      // 200 OK のエンドポイント一覧
+console.log(allResults.clientError);  // 4xx エラーのエンドポイント一覧
+console.log(allResults.serverError);  // 5xx エラーのエンドポイント一覧
 ```
 
-引数なしで全チェックします。
-```JavaScript
-nasne.checkEndpoint();
-// 400 - channelLogoDataGet
-// 400 - EPGStoreStart
-// 400 - EPGGet
-// 500 - connectionOnlineIdGet
-// ...
+### 特殊文字の変換
+
+nasne のレスポンスに含まれる Private Use Area 文字を読みやすい形式に変換します。
+
+```typescript
+nasne.formatText('\uE195ドラマタイトル');  // => '[終]ドラマタイトル'
+
+// またはスタンドアロンで使用
+import { formatText } from 'nasne-wrapper';
+formatText('\uE193\uE195映画タイトル');   // => '[新][終]映画タイトル'
 ```
 
-エンドポイントは[node-nasne](https://github.com/naokiy/node-nasne)を参考にさせていただきました。
+## API
 
-## Thanks
+### `new Nasne(ip: string)`
+
+| 引数 | 型 | 説明 |
+|------|----|------|
+| `ip` | `string` | nasne 本体の IP アドレス |
+
+### `nasne.fetch(endpoint, option?)`
+
+| 引数 | 型 | 説明 |
+|------|----|------|
+| `endpoint` | `EndpointName` | API エンドポイント名 |
+| `option` | `number` | `HDDInfoGet` 用オプション（0: 内蔵HDD, 1: 外付けHDD） |
+
+### `nasne.checkEndpoint(endpoint?)`
+
+| 引数 | 型 | 説明 |
+|------|----|------|
+| `endpoint` | `EndpointName` &#124; `undefined` | 省略時は全エンドポイントをチェック |
+
+戻り値: `Promise<CheckEndpointResult>`
+
+## 謝辞
+
+エンドポイントの参考:
 - http://pocketstudio.jp/log3/2014/12/07/nasune_api/
 - http://tateren.hateblo.jp/entry/2016/03/03/005415
 - https://github.com/naokiy/node-nasne
